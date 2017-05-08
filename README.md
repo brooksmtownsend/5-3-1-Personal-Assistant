@@ -1,0 +1,1 @@
+# 5-3-1 Personal Assistant project. After making my other weightlifting apps, I came to the conclusion that I was deep in a project that was not what I wanted, so I decided to restart and redesign the project, with a goal of releasing it on the app store when I finish the product.
