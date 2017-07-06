@@ -19,11 +19,8 @@ class ExerciseCollectionViewCell: UICollectionViewCell, UIPickerViewDelegate, UI
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
         pickerView.delegate = self
         pickerView.dataSource = self
-        
     }
     
     //PickerViewDelegate and DataSource functions
@@ -37,5 +34,14 @@ class ExerciseCollectionViewCell: UICollectionViewCell, UIPickerViewDelegate, UI
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         return pickerViewDelegate.pickerView(pickerView, attributedTitleForRow: row, forComponent: component)
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        pickerViewDelegate.pickerView(pickerView, didSelectRow: row, inComponent: component)
+    }
+    
+    //MARK: Custom Functions
+    func getSelectedValuesFromCell() -> WeightRepMeasurement{
+        return pickerViewDelegate.getSelectedValues()
     }
 }

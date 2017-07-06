@@ -9,6 +9,23 @@
 import Foundation
 import UIKit
 
+enum Unit: String{
+    case Pound = "lbs x"
+    case Kilogram = "kgs x"
+}
+
+struct WeightRepMeasurement{
+    let weight: Int
+    let reps: Int
+    let unit: Unit
+    
+    init(weight: Int, reps: Int, unit: Unit){
+        self.weight = weight
+        self.reps = reps
+        self.unit = unit
+    }
+}
+
 class ExercisePickerViewDelegate: NSObject{
     
     //MARK: Properties
@@ -16,7 +33,11 @@ class ExercisePickerViewDelegate: NSObject{
     let weightRows = 200
     let repRows = 16
     let labelRow = 1
-    let measurementOptions: [String] = ["lbs x", "kgs x"]
+    let measurementOptions: [String] = [Unit.Pound.rawValue, Unit.Kilogram.rawValue]
+    
+    var selectedWeight: Int = 0
+    var selectedReps: Int = 0
+    var selectedUnit: Unit = Unit.Pound
     
     override init(){
         super.init()
@@ -63,8 +84,33 @@ class ExercisePickerViewDelegate: NSObject{
         }
         
         return NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName:UIColor.white])
-        
     }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch component {
+        case 0:
+            let weight = self.pickerView(pickerView, attributedTitleForRow: row, forComponent: component)
+            let weightString = weight?.string.trimmingCharacters(in: CharacterSet.init(charactersIn: " "))
+            let weightInt = Int(weightString!)
+            self.selectedWeight = weightInt!
+            break
+        case 1:
+            let unit = self.pickerView(pickerView, attributedTitleForRow: row, forComponent: component)?.string
+            self.selectedUnit = unit == Unit.Pound.rawValue ? Unit.Pound : Unit.Kilogram
+            break
+        case 2:
+            let reps = self.pickerView(pickerView, attributedTitleForRow: row, forComponent: component)
+            let repsString = reps?.string.trimmingCharacters(in: CharacterSet.init(charactersIn: " "))
+            let repsInt = Int(repsString!)
+            self.selectedReps = repsInt!
+            break
+        default:
+            break
+        }
+    }
+    
+    func getSelectedValues() -> WeightRepMeasurement{
+        return WeightRepMeasurement(weight: self.selectedWeight, reps: self.selectedReps, unit: self.selectedUnit)
+    }
     
 }

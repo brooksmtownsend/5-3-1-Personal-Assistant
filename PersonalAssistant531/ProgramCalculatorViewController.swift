@@ -37,6 +37,33 @@ class ProgramCalculatorViewController: UIViewController, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return exerciseCollectionViewDelegate.collectionView(collectionView, cellForItemAt: indexPath)
     }
+    
+    //MARK: Actions
+    @IBAction func calculateProgram(_ sender: Any) {
+        var weights: [Int] = []
+        var reps: [Int] = []
+        var units: [Unit] = []
+        var maxes: [Int] = []
+        var allMaxes: [String: Int] = [:]
+        
+        var indexPath = IndexPath()
+        
+        while indexPath.row < 4 {
+            let cell = exerciseCollectionViewDelegate.collectionView(self.collectionView, cellForItemAt: indexPath) as! ExerciseCollectionViewCell
+            let weightRepMeasurement = cell.getSelectedValuesFromCell()
+            weights.append(weightRepMeasurement.weight)
+            reps.append(weightRepMeasurement.reps)
+//            isImperial.append(weightRepMeasurement.unit)
+        }
+        print(weights)
+        print(reps)
+    }
+    
+    //MARK: Helper methods
+    func calculateMax(_ weight: Int, _ reps: Int){
+//        wt. x reps x .0333 + wt.
+    }
+    
 
 }
 
